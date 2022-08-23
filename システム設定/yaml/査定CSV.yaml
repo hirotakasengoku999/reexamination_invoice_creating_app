@@ -1,0 +1,34 @@
+列の数: 30
+患者ID桁数: [6, 10]
+カルテ番号等: 18
+増減点数: 22
+箇所１: 19
+箇所２: 20
+請求内容: 25
+                        if row_list[22]:
+                            zougentensu = row_list[22]
+                        if row_list[19]:
+                            kasyo1 = row_list[19]
+                        if row_list[20]:
+                            kasyo2 = row_list[20]
+                        if row_list[23]:
+                            if row_list[27]:
+                                naiyo = row_list[27]
+                            else:
+                                naiyo = row_list[25]
+                            add_dict = {'TENSU': zougentensu, 'ZIYUKASYO': f'{row_list[23]} {kasyo1} {kasyo2}',
+                                        'NAIYO': naiyo}
+                            gentennaiyo_df = gentennaiyo_df.append(add_dict, ignore_index=True, sort=False)
+                            wn += 1
+                    unique_count_dict = gentennaiyo_df['TENSU'].value_counts().to_dict()
+                else:
+                    wn = 0
+        wn = 0
+        for index, value in gentennaiyo_df.iterrows():
+            if unique_count_dict[value['TENSU']] > 1:
+                tl[wn].insert(tkinter.END, '要確認')
+            else:
+                tl[wn].insert(tkinter.END, value['TENSU'])
+            zl[wn].insert(tkinter.END, value['ZIYUKASYO'])
+            nl[wn].insert(tkinter.END, value['NAIYO'])
+            wn += 1
